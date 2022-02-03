@@ -7,6 +7,7 @@ module.exports = {
   devtool: "inline-source-map",
   devServer: {
     port: 8564,
+    contentBase: './public',
   },
   entry: {
     header: './modules/header/header.js',
