@@ -1,0 +1,58 @@
+/* SUMMARY
+1. Global
+2. Header
+3. Body
+4. Footer
+*/
+
+
+/* 1. Global */
+
+.App {
+    font-family: Arial;
+}
+
+hr {
+    height: 2px;
+    background-color: #E0344B;
+    border: none;
+}
+
+/* 2. Header */
+
+.App-header {
+    display: flex;
+    align-items: center;
+    height: 30vh;
+}
+
+.App-header img {
+    height: 100%;
+}
+
+.App-header h1 {
+    font-size: 4.7vh;
+    margin-left: 1rem;
+    color: #E0344B;
+}
+
+
+/* 3. Body */
+
+.App-body {
+    min-height: 50vh;
+}
+
+.App-body p {
+    margin: 3rem 0rem 2rem 2rem;
+}
+
+
+/* 4. Footer */
+
+.App-footer {
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
