@@ -4,13 +4,14 @@ module.exports = {
   mode: 'development',
   entry: './src/index.js',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve('./dist'),
     filename: 'bundle.js',
   },
   devtool: "inline-source-map",
   devServer: {
     port: 8564,
     static: [ "dist" ],
+    hot: true,
   },
   module: {
     rules: [
