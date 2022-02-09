@@ -2,3 +2,11 @@
     border: 1px #E0344B dashed;
     padding: 0.3rem;
 }
+
+[data-priority=default] {
+    color: blue;
+}
+
+[data-priority=urgent] {
+    color: red;
+}
