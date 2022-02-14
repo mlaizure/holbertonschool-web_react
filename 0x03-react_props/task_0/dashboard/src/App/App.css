@@ -1,0 +1,11 @@
+/* Global */
+
+.App {
+    font-family: Arial;
+}
+
+hr {
+    height: 2px;
+    background-color: #E0344B;
+    border: none;
+}
