@@ -1,0 +1,10 @@
+/* Body */
+
+.App-body {
+    min-height: 50vh;
+    margin: 3rem 0rem 2rem 2rem;
+}
+
+.App-body input {
+    margin-right: 1rem;
+}
