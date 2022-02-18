@@ -1,0 +1,21 @@
+/* Notifications */
+
+.menuItem {
+    text-align: right;
+    margin: 0.3rem;
+}
+
+.Notifications {
+    border: 1px #E0344B dashed;
+    padding: 0.3rem;
+    width: 30%;
+    float: right;
+}
+
+[data-notification-type=default] {
+    color: blue;
+}
+
+[data-notification-type=urgent] {
+    color: red;
+}
