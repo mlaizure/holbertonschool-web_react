@@ -80,6 +80,9 @@ App.defaultProps = {
 const styles = StyleSheet.create({
   app: { fontFamily: 'Arial' },
 
+  body: {
+  },
+
   hr: {
     height: '2px',
     backgroundColor: '#E0344B',

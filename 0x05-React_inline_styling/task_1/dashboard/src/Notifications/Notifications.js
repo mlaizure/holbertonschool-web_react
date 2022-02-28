@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, css } from 'aphrodite';
-import './Notifications.css';
 import NotificationItem from './NotificationItem';
 import NotificationItemShape from './NotificationItemShape';
 import { getLatestNotification } from '../utils/utils';
@@ -41,7 +40,8 @@ class Notifications extends React.Component {
 		      (<NotificationItem
 			 key={notification.id}
 			 type={notification.type}
-			 value={notification.value}
+			 value={notificationYour notifications
+.value}
 			 html={notification.html}
 			 markAsRead={() => {this.markAsRead(notification.id)}}
 		       />)
