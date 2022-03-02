@@ -21,6 +21,7 @@ class Notifications extends React.Component {
   };
 
   render() {
+    const { displayDrawer, listNotifications, handleDisplayDrawer, handleHideDrawer } = this.props;
     return (
       <>
 	{ this.props.displayDrawer
@@ -28,7 +29,7 @@ class Notifications extends React.Component {
 	      <button style={{ position: 'absolute', top: '3px', right: '3px', border:'none', background: 'none'}}
 		      aria-label="Close"
 		      data-id="close-notifications"
-		      onClick={() => this.props.handleHideDrawer()}>
+		      onClick={handleHideDrawer}>
 		<img src={close_icon} alt="close icon" width="10px" height="10px" />
 	      </button>
 	      { this.props.listNotifications.length > 0
@@ -53,7 +54,7 @@ class Notifications extends React.Component {
 	  : <
 	      div className={css(styles.menuItemStyle)}
 	      data-id="menu-item"
-	      onClick={() => this.props.handleDisplayDrawer()}
+	      onClick={handleDisplayDrawer}
 	    >
 	    Your notifications</div>
 	}
