@@ -71,8 +71,8 @@ Notifications.propTypes = {
 
 Notifications.defaultProps = {
   displayDrawer: false,
-  handleDisplayDrawer: () => { },
-  handleHideDrawer: () => { },
+  handleDisplayDrawer: () => {},
+  handleHideDrawer: () => {},
   listNotifications: []
 };
 

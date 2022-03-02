@@ -76,11 +76,21 @@ describe('log out by pressing ctrl+h', () => {
 });
 
 describe('displayDrawer state', () => {
-  it('verifies defcault state for displayDrawer is false and turns true after calling handleDisplayDrawer', () => {
+  it('verifies default state for displayDrawer is false and turns true after calling handleDisplayDrawer', () => {
     const wrapper = shallow(<App />);
     expect(wrapper.state().displayDrawer).toEqual(false);
 
     wrapper.instance().handleDisplayDrawer();
     expect(wrapper.state().displayDrawer).toEqual(true);
+  });
+
+  it('verifies that after calling handleHideDrawer, state updates to false', () => {
+    const wrapper = shallow(<App />);
+    expect(wrapper.state().displayDrawer).toEqual(false);
+
+    wrapper.instance().handleDisplayDrawer();
+    expect(wrapper.state().displayDrawer).toEqual(true);
+    wrapper.instance().handleHideDrawer();
+    expect(wrapper.state().displayDrawer).toEqual(false);
   });
 });

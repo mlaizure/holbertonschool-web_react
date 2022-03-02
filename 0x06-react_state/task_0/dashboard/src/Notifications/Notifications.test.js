@@ -126,7 +126,7 @@ describe('verifies handle and hide DisplayDrawer called correctly', () => {
     handleSpy.mockRestore();
   });
 
-  it('verifies clicking on close button calls hideDisplayDrawer', () => {
+  it('verifies clicking on close button calls handleHideDrawer', () => {
     const mockHide = jest.fn();
     const wrapper = shallow(<Notifications displayDrawer={true} listNotifications={listNotifications} handleHideDrawer={mockHide} />);
     const hideSpy = jest.spyOn(wrapper.instance().props, 'handleHideDrawer');

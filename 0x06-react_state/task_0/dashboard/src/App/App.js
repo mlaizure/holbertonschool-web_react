@@ -49,6 +49,8 @@ class App extends React.Component {
       {id: 3, type: 'urgent', html: { __html: getLatestNotification() }},
     ];
 
+    let { displayDrawer } = this.state;
+
     return (
       <>
 	<
