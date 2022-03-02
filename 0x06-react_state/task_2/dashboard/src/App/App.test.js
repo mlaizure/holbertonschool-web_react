@@ -85,6 +85,16 @@ describe('displayDrawer state', () => {
     wrapper.instance().handleDisplayDrawer();
     expect(wrapper.state().displayDrawer).toEqual(true);
   });
+
+  it('verifies that after calling handleHideDrawer, state updates to false', () => {
+    const wrapper = shallow(<App />);
+    expect(wrapper.state().displayDrawer).toEqual(false);
+
+    wrapper.instance().handleDisplayDrawer();
+    expect(wrapper.state().displayDrawer).toEqual(true);
+    wrapper.instance().handleHideDrawer();
+    expect(wrapper.state().displayDrawer).toEqual(false);
+  });
 });
 
 describe('logIn and logOut functionality', () => {
