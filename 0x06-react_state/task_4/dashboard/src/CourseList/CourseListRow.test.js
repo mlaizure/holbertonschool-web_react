@@ -24,7 +24,8 @@ describe('rendering CourseListRow component', () => {
   it('tests component with isHeader false', () => {
     const wrapper = shallow(<CourseListRow isHeader={false} textFirstCell='first' textSecondCell='second' />);
     expect(wrapper.find('tr').children()).toHaveLength(2);
-    expect(wrapper.find('tr').childAt(0).html()).toEqual('<td>first</td>');
+    expect(wrapper.find('tr').childAt(0).name()).toEqual('td');
+    expect(wrapper.find('tr').childAt(0).text()).toEqual(' first');
     expect(wrapper.find('tr').childAt(1).html()).toEqual('<td>second</td>');
   });
 });

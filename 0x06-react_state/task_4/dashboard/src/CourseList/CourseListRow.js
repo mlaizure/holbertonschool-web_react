@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, css } from 'aphrodite';
 
 function CourseListRow({isHeader, textFirstCell, textSecondCell}) {
+  const [isChecked, setIsChecked] = useState(false);
   return (
     <tr className={isHeader ? css(styles.headerRowStyle) : css(styles.defaultRowStyle)}>
       {
@@ -14,7 +15,13 @@ function CourseListRow({isHeader, textFirstCell, textSecondCell}) {
 	    </>
 	: <th colSpan="2" className={css(styles.thBorderBottom)}>{textFirstCell}</th>
 	: <>
-	    <td>{textFirstCell}</td>
+	    <td className={isChecked ? css(styles.rowChecked) : null}>
+	      <input
+		type="checkbox"
+		name="styleCheckbox"
+		onChange={() => {setIsChecked(!isChecked)}}
+		/> {textFirstCell}
+	    </td>
 	    <td>{textSecondCell}</td>
 	  </>
       }
@@ -44,6 +51,8 @@ const styles = StyleSheet.create({
   textAlignLeft: { textAlign: 'left', },
 
   thBorderBottom: { borderBottom: '2px solid lightgray', },
+
+  rowChecked: { backgroundColor: '#e6e4e4', },
 });
 
 export default CourseListRow;
