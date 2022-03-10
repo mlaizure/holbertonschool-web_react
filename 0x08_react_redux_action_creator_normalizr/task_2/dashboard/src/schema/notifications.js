@@ -12,9 +12,15 @@ const notification = new schema.Entity('notifications', {
 const normalizedNotifications = normalize(notifications, [notification]);
 
 function getAllNotificationsByUser(userId) {
-  return notifications
-    .filter((notification) => notification.author.id === userId)
-    .map((notification) => notification.context);
+  const res = [];
+  const notifications = normalizedNotifications.entities.notifications;
+  const messages = normalizedNotifications.entities.messages;
+
+  for (const id in notifications) {
+    if (notifications[id].author === userId)
+      res.push(messages[notifications[id].context]);
+  }
+  return res;
 }
 
 export { normalizedNotifications, getAllNotificationsByUser };
