@@ -1,19 +1,23 @@
 import { LOGIN, LOGOUT, DISPLAY_NOTIFICATION_DRAWER, HIDE_NOTIFICATION_DRAWER } from './uiActionTypes';
 
+function dispatch(arg) {
+  return arg;
+}
+
 function login(email, password) {
-  return { type: LOGIN, user: { email, password } };
+  return dispatch({ type: LOGIN, user: { email, password } });
 }
 
 function logout() {
-  return { type: LOGOUT };
+  return dispatch({ type: LOGOUT });
 }
 
 function displayNotificationDrawer() {
-  return { type: DISPLAY_NOTIFICATION_DRAWER };
+  return dispatch({ type: DISPLAY_NOTIFICATION_DRAWER });
 }
 
 function hideNotificationDrawer() {
-  return { type: HIDE_NOTIFICATION_DRAWER };
+  return dispatch({ type: HIDE_NOTIFICATION_DRAWER });
 }
 
 export { login, logout, displayNotificationDrawer, hideNotificationDrawer };
