@@ -24,7 +24,6 @@ function hideNotificationDrawer() {
 }
 
 function loginSuccess(...args) {
-  console.log("RESULT: ", args)
   return dispatch({ type: LOGIN_SUCCESS });
 }
 

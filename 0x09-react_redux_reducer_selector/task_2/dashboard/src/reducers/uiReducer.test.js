@@ -1,6 +1,6 @@
 import { uiReducer, initialState } from './uiReducer';
-import { SELECT_COURSE } from '../actions/courseActionTypes';
-import { DISPLAY_NOTIFICATION_DRAWER } from '../actions/uiActionTypes';
+import { selectCourse } from '../actions/courseActionCreators';
+import { displayNotificationDrawer } from '../actions/uiActionCreators';
 
 describe('uiReducer', () => {
   it('verifies the state returned is initial state when no action is passed', () => {
@@ -8,13 +8,13 @@ describe('uiReducer', () => {
     expect(res.toJS()).toEqual(initialState.toJS());
   });
 
-  it('verifies state returned is initial state when SELECT_COURSE is passed', () => {
-    const res = uiReducer(initialState, SELECT_COURSE);
+  it('verifies state returned is initial state when selectCourse is passed', () => {
+    const res = uiReducer(initialState, selectCourse());
     expect(res.toJS()).toEqual(initialState.toJS());
   });
 
-  it('verifies state returned is correctly changed when DISPLAY_NOTIFICATION_DRAWER is passed', () => {
-    const res = uiReducer(initialState, DISPLAY_NOTIFICATION_DRAWER);
+  it('verifies state returned is correctly changed when displayNotificationDrawer is passed', () => {
+    const res = uiReducer(initialState, displayNotificationDrawer());
     expect(res.get('isNotificationDrawerVisible')).toEqual(true);
   });
 });

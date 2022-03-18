@@ -8,15 +8,15 @@ const initialState = {
 };
 
 function uiReducer(state = initialState, action) {
-  if (action === DISPLAY_NOTIFICATION_DRAWER)
+  if (action.type === DISPLAY_NOTIFICATION_DRAWER)
     return { ...state, isNotificationDrawerVisible: true, }
-  else if (action === HIDE_NOTIFICATION_DRAWER)
+  else if (action.type === HIDE_NOTIFICATION_DRAWER)
     return { ...state, isNotificationDrawerVisible: false, }
-  else if (action === LOGIN_SUCCESS)
+  else if (action.type === LOGIN_SUCCESS)
     return { ...state, isUserLoggedIn: true, }
-  else if (action === LOGIN_FAILURE)
+  else if (action.type === LOGIN_FAILURE)
     return { ...state, isUserLoggedIn: false, }
-  else if (action === LOGOUT)
+  else if (action.type === LOGOUT)
     return { ...state, isUserLoggedIn: false, }
   else
     return state;

@@ -9,15 +9,15 @@ const initialState = Map({
 });
 
 function uiReducer(state = initialState, action) {
-  if (action === DISPLAY_NOTIFICATION_DRAWER)
+  if (action.type === DISPLAY_NOTIFICATION_DRAWER)
     return state.set('isNotificationDrawerVisible', true);
-  else if (action === HIDE_NOTIFICATION_DRAWER)
+  else if (action.type === HIDE_NOTIFICATION_DRAWER)
     return state.set('isNotificationDrawerVisible', false);
-  else if (action === LOGIN_SUCCESS)
+  else if (action.type === LOGIN_SUCCESS)
     return state.set('isUserLoggedIn', true);
-  else if (action === LOGIN_FAILURE)
+  else if (action.type === LOGIN_FAILURE)
     return state.set('isUserLoggedIn', false);
-  else if (action === LOGOUT)
+  else if (action.type === LOGOUT)
     return state.set('isUserLoggedIn', false);
   else
     return state;
