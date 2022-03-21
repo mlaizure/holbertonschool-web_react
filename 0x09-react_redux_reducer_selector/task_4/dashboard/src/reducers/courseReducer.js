@@ -1,35 +1,32 @@
 import { FETCH_COURSE_SUCCESS, SELECT_COURSE, UNSELECT_COURSE, } from '../actions/courseActionTypes';
+import { Map } from 'immutable';
+import coursesNormalizer from '../schema/courses';
 
-const defaultState = [];
+const initialState = Map([]);
 
-function courseReducer(state = defaultState, action) {
-  if (action.type === FETCH_COURSE_SUCCESS)
-    return action.data.map((course) => ({
+function courseReducer(state = initialState, action) {
+  if (action.type === FETCH_COURSE_SUCCESS) {
+    const courses = action.data.map((course) => ({
       ...course,
       isSelected: false,
     }));
+    const normalizedCourses = coursesNormalizer(courses);
+    return state.merge(normalizedCourses);
+  }
 
   else if (action.type === SELECT_COURSE)
-    return state.map((course) => {
-      if (course.id === action.index)
-	return {
-	  ...course,
-	  isSelected: true,
-	};
-      else return course;
-    });
+    return state.setIn(
+      ['entities', 'courses', action.index.toString(), 'isSelected'],
+      true
+    );
 
   else if (action.type === UNSELECT_COURSE)
-    return state.map((course) => {
-      if (course.id === action.index)
-	return {
-	  ...course,
-	  isSelected: false,
-	};
-      else return course;
-    });
+    return state.setIn(
+      ['entities', 'courses', action.index.toString(), 'isSelected'],
+      false
+    );
 
   else return state;
 }
 
-export { courseReducer, defaultState };
+export { courseReducer, initialState };

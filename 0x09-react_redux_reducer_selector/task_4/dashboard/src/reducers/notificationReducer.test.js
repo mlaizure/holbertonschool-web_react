@@ -1,6 +1,8 @@
 import { fetchNotificationsSuccess, markAsRead, setNotificationFilter, } from '../actions/notificationActionCreators';
 import { NotificationTypeFilters } from '../actions/notificationActionTypes';
-import { notificationReducer, defaultState } from './notificationReducer';
+import { notificationReducer, initialState } from './notificationReducer';
+import { notificationsNormalizer } from '../schema/notifications';
+import { Map } from 'immutable';
 
 const testNotificationState = {
   filter: "DEFAULT",
@@ -24,6 +26,11 @@ const testNotificationState = {
       value: "New data available",
     },
   ],
+};
+
+const normalizedTestNotificationState = {
+  ...testNotificationState,
+  notifications: notificationsNormalizer(testNotificationState.notifications),
 };
 
 const readNotificationState = {
@@ -50,6 +57,11 @@ const readNotificationState = {
   ],
 };
 
+const normalizedReadNotificationState = {
+  ...readNotificationState,
+  notifications: notificationsNormalizer(readNotificationState.notifications),
+};
+
 const urgentFilterNotificationState = {
   filter: "URGENT",
   notifications: [
@@ -74,33 +86,37 @@ const urgentFilterNotificationState = {
   ],
 };
 
+const normalizedUrgentFilterNotificationState = {
+  ...urgentFilterNotificationState,
+  notifications: notificationsNormalizer(urgentFilterNotificationState.notifications),
+};
+
 describe('notificationReducer', () => {
   it('verifies default state returns an empty list and default filter', () => {
     const res = notificationReducer(undefined, 'no_action');
-    expect(res.notifications).toEqual([]);
-    expect(res.filter).toEqual(NotificationTypeFilters.DEFAULT);
+    expect(res.toJS().notifications).toEqual(initialState.toJS().notifications);
+    expect(res.toJS().filter).toEqual(NotificationTypeFilters.DEFAULT);
   });
 
   it('verifies fetchNotificationsSuccess returns data passed', () => {
     const res = notificationReducer(
-      defaultState,
+      initialState,
       fetchNotificationsSuccess(testNotificationState.notifications)
     );
-    expect(res.notifications).toEqual(testNotificationState.notifications);
-    expect(res.filter).toEqual(NotificationTypeFilters.DEFAULT);
+    expect(res.toJS()).toEqual(normalizedTestNotificationState);
+    expect(res.toJS().filter).toEqual(NotificationTypeFilters.DEFAULT);
   });
 
   it('verifies markAsRead returns data with isRead as true', () => {
-    const res = notificationReducer(testNotificationState, markAsRead(2));
-    expect(res.notifications.find((notification) => notification.id === 2).isRead).toEqual(true);
+    const res = notificationReducer(Map(normalizedTestNotificationState), markAsRead(2));
+    expect(res.toJS().notifications.entities.notifications["2"].isRead).toEqual(true);
   });
 
-  it('verifies setNotificaitonFilter returns state with correct filter', () => {
+  it('verifies setNotificationFilter returns state with correct filter', () => {
     const res = notificationReducer(
-      testNotificationState,
+      Map(normalizedTestNotificationState),
       setNotificationFilter(NotificationTypeFilters.URGENT)
     );
-    expect(res.filter).toEqual(NotificationTypeFilters.URGENT);
-    expect(res.notifications).toEqual(testNotificationState.notifications);
+    expect(res.get("filter")).toEqual(NotificationTypeFilters.URGENT);
   });
 });

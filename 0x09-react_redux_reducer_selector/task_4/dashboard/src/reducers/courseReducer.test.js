@@ -1,5 +1,7 @@
-import { courseReducer, defaultState } from './courseReducer';
+import { courseReducer, initialState } from './courseReducer';
 import { fetchCourseSuccess, selectCourse, unSelectCourse } from '../actions/courseActionCreators';
+import coursesNormalizer from '../schema/courses';
+import { Map } from 'immutable';
 
 const unselectedCourseList = [
   {
@@ -22,6 +24,8 @@ const unselectedCourseList = [
   },
 ];
 
+const normalizedUnselectedCourseList = coursesNormalizer(unselectedCourseList);
+
 const es6SelectedCourseList = [
   {
     id: 1,
@@ -43,24 +47,26 @@ const es6SelectedCourseList = [
   },
 ];
 
+const normalizedEs6SelectedCourseList = coursesNormalizer(es6SelectedCourseList);
+
 describe('courseReducer', () => {
   it('verifies default state returns empty array', () => {
     const res = courseReducer(undefined, 'no_action');
-    expect(res).toEqual([]);
+    expect(res.toJS()).toEqual(initialState.toJS());
   });
 
   it('verifies fetchCourseSuccess returns data passed', () => {
-    const res = courseReducer(defaultState, fetchCourseSuccess(es6SelectedCourseList));
-    expect(res).toEqual(unselectedCourseList);
+    const res = courseReducer(initialState, fetchCourseSuccess(unselectedCourseList));
+    expect(res.toJS()).toEqual(normalizedUnselectedCourseList);
   });
 
   it('verifies selectCourse returns data with isSelected as true', () => {
-    const res = courseReducer(unselectedCourseList, selectCourse(1));
-    expect(res).toEqual(es6SelectedCourseList);
+    const res = courseReducer(Map(normalizedUnselectedCourseList), selectCourse(1));
+    expect(res.toJS()).toEqual(normalizedEs6SelectedCourseList);
   });
 
   it('verifies unSelectCourse returns data with isSelected as false', () => {
-    const res = courseReducer(es6SelectedCourseList, unSelectCourse(1));
-    expect(res).toEqual(unselectedCourseList);
+    const res = courseReducer(Map(normalizedEs6SelectedCourseList), unSelectCourse(1));
+    expect(res.toJS()).toEqual(normalizedUnselectedCourseList);
   });
 });
