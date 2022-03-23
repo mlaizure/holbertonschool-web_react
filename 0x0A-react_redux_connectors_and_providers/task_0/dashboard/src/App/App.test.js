@@ -10,6 +10,8 @@ import Footer from '../Footer/Footer';
 import CourseList from '../CourseList/CourseList';
 import { shallow, mount } from 'enzyme';
 import { StyleSheetTestUtils } from 'aphrodite';
+import { mapStateToProps } from './App';
+import { fromJS } from 'immutable';
 
 StyleSheetTestUtils.suppressStyleInjection();
 
@@ -130,5 +132,12 @@ describe('markNotificationAsRead functionality', () => {
     expect(wrapper.state('listNotifications')).toHaveLength(exampleNotifications.length - 1);
     const ids = wrapper.state('listNotifications').map(({id}) => id);
     expect(ids).not.toContain(exampleNotifications[0].id);
+  });
+});
+
+describe('mapStateToProps', () => {
+  it('verifies the function returns the right object when passing the state', () => {
+    const res = mapStateToProps(fromJS({ isUserLoggedIn: true }));
+    expect(res).toEqual({ isLoggedIn: true });
   });
 });
