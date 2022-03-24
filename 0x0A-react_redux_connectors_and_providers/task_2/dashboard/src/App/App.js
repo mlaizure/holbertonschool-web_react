@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, css } from 'aphrodite';
 import Notifications from '../Notifications/Notifications';
-import { ConntectedHeader as Header } from '../Header/Header';
+import { ConnectedHeader as Header } from '../Header/Header';
 import { LoginWithLogging } from '../Login/Login';
 import { ConnectedFooter as Footer } from '../Footer/Footer';
 import CourseList from '../CourseList/CourseList';
@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import {
   displayNotificationDrawer,
   hideNotificationDrawer,
+  loginRequest,
 } from "../actions/uiActionCreators.js"
 
 class App extends React.Component {
@@ -41,33 +42,35 @@ class App extends React.Component {
     ];
 
     return (
-      <
-	Notifications
-	listNotifications={this.state.listNotifications}
-	displayDrawer={this.props.displayDrawer}
-	handleDisplayDrawer={this.props.displayNotificationDrawer}
-	handleHideDrawer={this.props.hideNotificationDrawer}
-	markNotificationAsRead={this.markNotificationAsRead}
-      />
-      <div className={css(styles.app)}>
-	<Header />
-	<hr className={css(styles.hr)}/>
-	{
-	  this.props.isLoggedIn ? (
-	    <BodySectionWithMarginBottom title="Course list">
-	      <CourseList listCourses={listCourses} />
-	    </BodySectionWithMarginBottom>
-	  ) : (
-	    <BodySectionWithMarginBottom title="Log in to continue">
-	      <LoginWithLogging logIn={this.props.login} />
-	    </BodySectionWithMarginBottom>
-	  )
-	}
-	<BodySection title="News from the School">
-	  <p>You are not alone. We've all had our battles with darkness and shadows. I'm here to let you know: It's a pleasure to meet you.</p>
-	</BodySection>
-	<hr className={css(styles.hr)}/>
-	<Footer styles={styles}/>
+      <div>
+	<
+	  Notifications
+	  listNotifications={this.state.listNotifications}
+	  displayDrawer={this.props.displayDrawer}
+	  handleDisplayDrawer={this.props.displayNotificationDrawer}
+	  handleHideDrawer={this.props.hideNotificationDrawer}
+	  markNotificationAsRead={this.markNotificationAsRead}
+	/>
+	<div className={css(styles.app)}>
+	  <Header />
+	  <hr className={css(styles.hr)}/>
+	  {
+	    this.props.isLoggedIn ? (
+	      <BodySectionWithMarginBottom title="Course list">
+		<CourseList listCourses={listCourses} />
+	      </BodySectionWithMarginBottom>
+	    ) : (
+	      <BodySectionWithMarginBottom title="Log in to continue">
+		<LoginWithLogging logIn={this.props.login} />
+	      </BodySectionWithMarginBottom>
+	    )
+	  }
+	  <BodySection title="News from the School">
+	    <p>You are not alone. We've all had our battles with darkness and shadows. I'm here to let you know: It's a pleasure to meet you.</p>
+	  </BodySection>
+	  <hr className={css(styles.hr)}/>
+	  <Footer styles={styles}/>
+	</div>
       </div>
     );
   };

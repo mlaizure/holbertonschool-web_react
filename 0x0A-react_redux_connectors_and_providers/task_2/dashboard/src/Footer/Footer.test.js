@@ -3,8 +3,13 @@
  */
 import React from 'react';
 import Footer from './Footer';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { AppContext } from '../App/AppContext';
+
+const user = {
+  email:'email@email.com',
+  password: 'password',
+};
 
 describe('Footer component rendering', () => {
     it('renders Footer without crashing', () => {
@@ -12,7 +17,7 @@ describe('Footer component rendering', () => {
   });
 
   it('renders text "Copyright"', () => {
-    const wrapper = mount(<Footer />);
+    const wrapper = shallow(<Footer />);
     expect(wrapper.find('div[data-id="app-footer"] p').first().text()).toContain('Copyright');
   });
 });
@@ -24,8 +29,7 @@ describe('contact us link behavior', () => {
   });
 
   it('verifies the link is displayed when the user is logged in within the context', () => {
-    const value = { user: { email:'email@email.com', password: 'password', isLoggedIn: true }, logOut: () => {} };
-    const wrapper = mount(<AppContext.Provider value={value}><Footer /></AppContext.Provider>);
+    const wrapper = shallow(<Footer isLoggedIn={true} user={user} />);
     expect(wrapper.find('p[data-id="contact-us"]')).toHaveLength(1);
   });
 });

@@ -1,5 +1,5 @@
 import { LOGOUT, DISPLAY_NOTIFICATION_DRAWER, HIDE_NOTIFICATION_DRAWER,
-	 LOGIN_SUCCESS, LOGIN_FAILURE } from '../actions/uiActionTypes';
+	 LOGIN_SUCCESS, LOGIN_FAILURE, LOGIN } from '../actions/uiActionTypes';
 import { Map } from 'immutable';
 
 const initialState = Map({
@@ -18,7 +18,9 @@ function uiReducer(state = initialState, action) {
   else if (action.type === LOGIN_FAILURE)
     return state.set('isUserLoggedIn', false);
   else if (action.type === LOGOUT)
-    return state.set('isUserLoggedIn', false);
+    return state.set('isUserLoggedIn', false).set('user', null);
+  else if (action.type === LOGIN)
+    return state.set('isUserLoggedIn', true).set('user', action.user)
   else
     return state;
 }
