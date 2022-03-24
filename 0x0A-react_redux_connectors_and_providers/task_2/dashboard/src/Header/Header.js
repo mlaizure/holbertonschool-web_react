@@ -48,11 +48,13 @@ const styles = StyleSheet.create({
 Header.propTypes = {
   user: PropTypes.object,
   logout: PropTypes.func,
+  isLoggedIn: PropTypes.bool,
 };
 
 Header.defaultProps = {
   user: {},
-  logout: () => { }
+  logout: () => { },
+  isLoggedIn: false,
 };
 
 function mapDispatchToProps(dispatch) {
@@ -60,7 +62,10 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  return { user: state.toJS().user };
+  return {
+    user: state.toJS().user,
+    isLoggedIn: state.toJS().isUserLoggedIn,
+  };
 }
 
 const ConnectedHeader = connect(mapStateToProps, mapDispatchToProps)(Header);

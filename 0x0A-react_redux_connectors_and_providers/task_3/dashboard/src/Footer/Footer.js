@@ -32,6 +32,7 @@ Footer.defaultProps = {
 function mapStateToProps(state) {
   return {
     user: state.toJS().user,
+    isLoggedIn: state.toJS().isUserLoggedIn,
   };
 }
 
