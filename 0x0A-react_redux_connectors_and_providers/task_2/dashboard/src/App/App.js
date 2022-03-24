@@ -4,7 +4,7 @@ import { StyleSheet, css } from 'aphrodite';
 import Notifications from '../Notifications/Notifications';
 import Header from '../Header/Header';
 import { LoginWithLogging } from '../Login/Login';
-import Footer from '../Footer/Footer';
+import { ConnectedFooter as Footer } from '../Footer/Footer';
 import CourseList from '../CourseList/CourseList';
 import BodySection from '../BodySection/BodySection';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
@@ -28,17 +28,12 @@ class App extends React.Component {
 	{id: 3, type: 'urgent', html: { __html: getLatestNotification() }},
       ],
     };
-    this.logIn = this.logIn.bind(this);
     this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
   };
 
   markNotificationAsRead(id) {
     const newNotifications = this.state.listNotifications.filter(notification => notification.id !== id);
     this.setState({ listNotifications: newNotifications });
-  };
-
-  logIn(email, password) {
-    this.setState({ user: { email, password, isLoggedIn: true } });
   };
 
   componentDidMount() {
@@ -84,7 +79,7 @@ class App extends React.Component {
 	      </BodySectionWithMarginBottom>
 	    ) : (
 	      <BodySectionWithMarginBottom title="Log in to continue">
-		<LoginWithLogging logIn={this.logIn} />
+		<LoginWithLogging logIn={this.props.login} />
 	      </BodySectionWithMarginBottom>
 	    )
 	  }
@@ -139,6 +134,7 @@ function mapDispatchToProps (dispatch) {
   return {
     displayNotificationDrawer: () => dispatch(displayNotificationDrawer()),
     hideNotificationDrawer: () => dispatch(hideNotificationDrawer()),
+    login: (...args) => dispatch(loginRequest(...args)),
   }
 }
 
