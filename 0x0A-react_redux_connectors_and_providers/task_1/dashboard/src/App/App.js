@@ -11,12 +11,15 @@ import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBot
 import { getLatestNotification } from "../utils/utils";
 import { defaultUser, AppContext } from './AppContext';
 import { connect } from 'react-redux';
+import {
+  displayNotificationDrawer,
+  hideNotificationDrawer,
+} from "../actions/uiActionCreators.js"
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayDrawer: false,
       user: defaultUser,
       logOut: () => { this.setState({ user: defaultUser }); },
       listNotifications: [
@@ -25,8 +28,6 @@ class App extends React.Component {
 	{id: 3, type: 'urgent', html: { __html: getLatestNotification() }},
       ],
     };
-    this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
-    this.handleHideDrawer = this.handleHideDrawer.bind(this);
     this.logIn = this.logIn.bind(this);
     this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
   };
@@ -39,9 +40,6 @@ class App extends React.Component {
   logIn(email, password) {
     this.setState({ user: { email, password, isLoggedIn: true } });
   };
-
-  handleDisplayDrawer() { this.setState({ displayDrawer: true }); };
-  handleHideDrawer() { this.setState({ displayDrawer: false }); };
 
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeydown);
@@ -71,16 +69,16 @@ class App extends React.Component {
 	<
 	  Notifications
 	  listNotifications={this.state.listNotifications}
-	  displayDrawer={this.state.displayDrawer}
-	  handleDisplayDrawer={this.handleDisplayDrawer}
-	  handleHideDrawer={this.handleHideDrawer}
+	  displayDrawer={this.props.displayDrawer}
+	  handleDisplayDrawer={this.props.displayNotificationDrawer}
+	  handleHideDrawer={this.props.hideNotificationDrawer}
 	  markNotificationAsRead={this.markNotificationAsRead}
 	/>
 	<div className={css(styles.app)}>
 	  <Header />
 	  <hr className={css(styles.hr)}/>
 	  {
-	    this.state.user.isLoggedIn ? (
+	    this.props.isLoggedIn ? (
 	      <BodySectionWithMarginBottom title="Course list">
 		<CourseList listCourses={listCourses} />
 	      </BodySectionWithMarginBottom>
@@ -123,9 +121,33 @@ const styles = StyleSheet.create({
   },
 });
 
-function mapStateToProps(state) {
-  return { isLoggedIn: state.toJS().isUserLoggedIn};
+App.propTypes = {
+  isLoggedIn: PropTypes.bool,
+  displayDrawer: PropTypes.bool,
+  displayNotificationDrawer: PropTypes.func,
+  hideNotificationDrawer: PropTypes.func,
 }
-connect(mapStateToProps)(App);
+
+App.defaultProps = {
+  isLoggedIn: false,
+  displayDrawer: false,
+  displayNotificationDrawer: () => {},
+  hideNotificationDrawer: () => {},
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    displayNotificationDrawer: () => dispatch(displayNotificationDrawer()),
+    hideNotificationDrawer: () => dispatch(hideNotificationDrawer()),
+  }
+}
+
+function mapStateToProps(state) {
+  return {
+    isLoggedIn: state.toJS().isUserLoggedIn,
+    displayDrawer: state.toJS().isNotificationDrawerVisible,
+  };
+}
+connect(mapStateToProps, mapDispatchToProps)(App);
 
 export { App as default, mapStateToProps };
