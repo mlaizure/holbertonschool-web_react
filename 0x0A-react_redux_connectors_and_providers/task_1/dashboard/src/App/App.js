@@ -148,6 +148,7 @@ function mapStateToProps(state) {
     displayDrawer: state.toJS().isNotificationDrawerVisible,
   };
 }
-connect(mapStateToProps, mapDispatchToProps)(App);
 
-export { App as default, mapStateToProps };
+const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
+
+export { App as default, ConnectedApp, mapStateToProps }

@@ -56,14 +56,14 @@ describe('component rendering when isLoggedIn is false', () => {
 
 describe('component rendering when isLoggedIn is true', () => {
   it('verifies that Login component is not included', () => {
-    const wrapper = shallow(<App />);
-    wrapper.setState({ user: loggedInUser });
+    const wrapper = shallow(<App isLoggedIn={true} />);
+//    wrapper.setState({ user: loggedInUser });
     expect(wrapper.find(LoginWithLogging).exists()).toEqual(false);
   });
 
   it('verifies that CourseList component is included', () => {
-    const wrapper = shallow(<App />);
-    wrapper.setState({ user: loggedInUser });
+    const wrapper = shallow(<App isLoggedIn={true} />);
+//    wrapper.setState({ user: loggedInUser });
     expect(wrapper.find(CourseList).exists()).toEqual(true);
   });
 });
@@ -82,26 +82,6 @@ describe('log out by pressing ctrl+h', () => {
     expect(wrapper.state().user.email).toEqual('');
     expect(wrapper.state().user.password).toEqual('');
     expect(wrapper.state().user.isLoggedIn).toEqual(false);
-  });
-});
-
-describe('displayDrawer state', () => {
-  it('verifies default state for displayDrawer is false and turns true after calling handleDisplayDrawer', () => {
-    const wrapper = shallow(<App />);
-    expect(wrapper.state().displayDrawer).toEqual(false);
-
-    wrapper.instance().handleDisplayDrawer();
-    expect(wrapper.state().displayDrawer).toEqual(true);
-  });
-
-  it('verifies that after calling handleHideDrawer, state updates to false', () => {
-    const wrapper = shallow(<App />);
-    expect(wrapper.state().displayDrawer).toEqual(false);
-
-    wrapper.instance().handleDisplayDrawer();
-    expect(wrapper.state().displayDrawer).toEqual(true);
-    wrapper.instance().handleHideDrawer();
-    expect(wrapper.state().displayDrawer).toEqual(false);
   });
 });
 
