@@ -2,14 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, css } from 'aphrodite';
 import Notifications from '../Notifications/Notifications';
-import Header from '../Header/Header';
+import { ConntectedHeader as Header } from '../Header/Header';
 import { LoginWithLogging } from '../Login/Login';
 import { ConnectedFooter as Footer } from '../Footer/Footer';
 import CourseList from '../CourseList/CourseList';
 import BodySection from '../BodySection/BodySection';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import { getLatestNotification } from "../utils/utils";
-import { defaultUser, AppContext } from './AppContext';
 import { connect } from 'react-redux';
 import {
   displayNotificationDrawer,
@@ -20,8 +19,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: defaultUser,
-      logOut: () => { this.setState({ user: defaultUser }); },
       listNotifications: [
 	{id: 1, type: 'default', value: 'New course available'},
 	{id: 2, type: 'urgent', value: 'New resume available'},
@@ -36,21 +33,6 @@ class App extends React.Component {
     this.setState({ listNotifications: newNotifications });
   };
 
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleKeydown);
-  };
-
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeydown);
-  };
-
-  handleKeydown = (e) => {
-    if (e.ctrlKey && e.key === 'h') {
-      alert('Logging you out');
-      this.state.logOut();
-    }
-  };
-
   render() {
     const listCourses = [
       {id: 1, name: 'ES6', credit: 60},
@@ -58,38 +40,35 @@ class App extends React.Component {
       {id: 3, name: 'React', credit: 40},
     ];
 
-    const v = { user: this.state.user, logOut: this.state.logOut };
     return (
-      <AppContext.Provider value={v}>
-	<
-	  Notifications
-	  listNotifications={this.state.listNotifications}
-	  displayDrawer={this.props.displayDrawer}
-	  handleDisplayDrawer={this.props.displayNotificationDrawer}
-	  handleHideDrawer={this.props.hideNotificationDrawer}
-	  markNotificationAsRead={this.markNotificationAsRead}
-	/>
-	<div className={css(styles.app)}>
-	  <Header />
-	  <hr className={css(styles.hr)}/>
-	  {
-	    this.props.isLoggedIn ? (
-	      <BodySectionWithMarginBottom title="Course list">
-		<CourseList listCourses={listCourses} />
-	      </BodySectionWithMarginBottom>
-	    ) : (
-	      <BodySectionWithMarginBottom title="Log in to continue">
-		<LoginWithLogging logIn={this.props.login} />
-	      </BodySectionWithMarginBottom>
-	    )
-	  }
-	  <BodySection title="News from the School">
-	    <p>You are not alone. We've all had our battles with darkness and shadows. I'm here to let you know: It's a pleasure to meet you.</p>
-	  </BodySection>
-	  <hr className={css(styles.hr)}/>
-	  <Footer styles={styles}/>
-	</div>
-      </AppContext.Provider>
+      <
+	Notifications
+	listNotifications={this.state.listNotifications}
+	displayDrawer={this.props.displayDrawer}
+	handleDisplayDrawer={this.props.displayNotificationDrawer}
+	handleHideDrawer={this.props.hideNotificationDrawer}
+	markNotificationAsRead={this.markNotificationAsRead}
+      />
+      <div className={css(styles.app)}>
+	<Header />
+	<hr className={css(styles.hr)}/>
+	{
+	  this.props.isLoggedIn ? (
+	    <BodySectionWithMarginBottom title="Course list">
+	      <CourseList listCourses={listCourses} />
+	    </BodySectionWithMarginBottom>
+	  ) : (
+	    <BodySectionWithMarginBottom title="Log in to continue">
+	      <LoginWithLogging logIn={this.props.login} />
+	    </BodySectionWithMarginBottom>
+	  )
+	}
+	<BodySection title="News from the School">
+	  <p>You are not alone. We've all had our battles with darkness and shadows. I'm here to let you know: It's a pleasure to meet you.</p>
+	</BodySection>
+	<hr className={css(styles.hr)}/>
+	<Footer styles={styles}/>
+      </div>
     );
   };
 };
@@ -130,7 +109,7 @@ App.defaultProps = {
   hideNotificationDrawer: () => {},
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     displayNotificationDrawer: () => dispatch(displayNotificationDrawer()),
     hideNotificationDrawer: () => dispatch(hideNotificationDrawer()),
