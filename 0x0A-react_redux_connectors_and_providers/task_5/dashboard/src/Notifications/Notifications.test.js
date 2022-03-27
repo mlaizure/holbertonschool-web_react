@@ -112,3 +112,11 @@ describe('verifies handle and hide DisplayDrawer called correctly', () => {
     hideSpy.mockRestore();
   });
 });
+
+describe('fetchNotifications', () => {
+  it('verifies fetchNotifications is called when component mounted', () => {
+    const mockFetch = jest.fn();
+    const wrapper = mount(<Notifications displayDrawer={true} fetchNotifications = {mockFetch} />);
+    expect(mockFetch).toHaveBeenCalled();
+  });
+});

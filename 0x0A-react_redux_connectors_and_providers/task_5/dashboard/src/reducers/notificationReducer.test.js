@@ -1,4 +1,4 @@
-import { fetchNotificationsSuccess, markAsRead, setNotificationFilter, } from '../actions/notificationActionCreators';
+import { setLoadingState, fetchNotificationsSuccess, markAsRead, setNotificationFilter, } from '../actions/notificationActionCreators';
 import { NotificationTypeFilters } from '../actions/notificationActionTypes';
 import { notificationReducer, initialState } from './notificationReducer';
 import { notificationsNormalizer } from '../schema/notifications';
@@ -6,6 +6,7 @@ import { Map } from 'immutable';
 
 const testNotificationState = {
   filter: "DEFAULT",
+  loading: false,
   notifications: [
     {
       id: 1,
@@ -35,6 +36,7 @@ const normalizedTestNotificationState = {
 
 const readNotificationState = {
   filter: "DEFAULT",
+  loading: false,
   notifications: [
     {
       id: 1,
@@ -64,6 +66,7 @@ const normalizedReadNotificationState = {
 
 const urgentFilterNotificationState = {
   filter: "URGENT",
+  loading: false,
   notifications: [
     {
       id: 1,
@@ -118,5 +121,13 @@ describe('notificationReducer', () => {
       setNotificationFilter(NotificationTypeFilters.URGENT)
     );
     expect(res.get("filter")).toEqual(NotificationTypeFilters.URGENT);
+  });
+
+  it('verifies setLoadingState updates the loading state', () => {
+    const res = notificationReducer(
+      initialState,
+      setLoadingState(true)
+    );
+    expect(res.toJS().loading).toEqual(true);
   });
 });

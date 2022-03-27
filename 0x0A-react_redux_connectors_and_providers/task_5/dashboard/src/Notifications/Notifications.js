@@ -2,13 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, css } from 'aphrodite';
 import NotificationItem from './NotificationItem';
-import NotificationItemShape from './NotificationItemShape';
 import { getLatestNotification } from '../utils/utils';
 import close_icon from '../assets/close-icon.png';
+import { getNotifications } from '../selectors/notificationSelector';
+import { fetchNotifications } from '../actions/notificationActionCreators';
 
 class Notifications extends React.PureComponent {
-  constructor(props) {
-    super(props);
+
+  componentDidMount () {
+    this.props.fetchNotifications();
   }
 
   render() {
@@ -54,22 +56,6 @@ class Notifications extends React.PureComponent {
     );
   };
 }
-
-Notifications.propTypes = {
-  displayDrawer: PropTypes.bool,
-  handleDisplayDrawer: PropTypes.func,
-  handleHideDrawer: PropTypes.func,
-  listNotifications: PropTypes.arrayOf(NotificationItemShape),
-  markNotificationAsRead: PropTypes.func,
-};
-
-Notifications.defaultProps = {
-  displayDrawer: false,
-  handleDisplayDrawer: () => {},
-  handleHideDrawer: () => {},
-  listNotifications: [],
-  markNotificationAsRead: () => {},
-};
 
 const opacityKeyframes = {
   'from': { opacity: 0.5, },
@@ -120,5 +106,37 @@ const styles = StyleSheet.create({
     },
   },
 });
+
+Notifications.propTypes = {
+  displayDrawer: PropTypes.bool,
+  handleDisplayDrawer: PropTypes.func,
+  handleHideDrawer: PropTypes.func,
+  listNotifications: PropTypes.array,
+  markNotificationAsRead: PropTypes.func,
+  fetchNotifications: PropTypes.func,
+};
+
+Notifications.defaultProps = {
+  displayDrawer: false,
+  handleDisplayDrawer: () => {},
+  handleHideDrawer: () => {},
+  listNotifications: [],
+  markNotificationAsRead: () => {},
+  fetchNotifications: () => {},
+};
+
+function mapStateToProps(state) {
+  const messages =
+    getNotifications(state)
+    .map((notification) => notification.value)
+
+  return { listNotifications: messages }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchNotifications: () => dispatch(fetchNotifications()),
+  }
+}
 
 export default Notifications;

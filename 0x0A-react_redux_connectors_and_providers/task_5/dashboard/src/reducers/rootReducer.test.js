@@ -10,6 +10,7 @@ describe('rootReducer', () => {
       notifications: Map({
 	notifications: [],
 	filter: 'DEFAULT',
+	loading: false,
       }),
       ui: Map({
 	isNotificationDrawerVisible: false,

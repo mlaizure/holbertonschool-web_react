@@ -17,23 +17,6 @@ import {
 } from "../actions/uiActionCreators.js"
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      listNotifications: [
-	{id: 1, type: 'default', value: 'New course available'},
-	{id: 2, type: 'urgent', value: 'New resume available'},
-	{id: 3, type: 'urgent', html: { __html: getLatestNotification() }},
-      ],
-    };
-    this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
-  };
-
-  markNotificationAsRead(id) {
-    const newNotifications = this.state.listNotifications.filter(notification => notification.id !== id);
-    this.setState({ listNotifications: newNotifications });
-  };
-
   render() {
     const listCourses = [
       {id: 1, name: 'ES6', credit: 60},
@@ -45,11 +28,9 @@ class App extends React.Component {
       <div>
 	<
 	  Notifications
-	  listNotifications={this.state.listNotifications}
 	  displayDrawer={this.props.displayDrawer}
 	  handleDisplayDrawer={this.props.displayNotificationDrawer}
 	  handleHideDrawer={this.props.hideNotificationDrawer}
-	  markNotificationAsRead={this.markNotificationAsRead}
 	/>
 	<div className={css(styles.app)}>
 	  <Header />
