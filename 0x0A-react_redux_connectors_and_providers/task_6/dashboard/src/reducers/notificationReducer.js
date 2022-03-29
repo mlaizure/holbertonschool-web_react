@@ -6,14 +6,15 @@ import { notificationsNormalizer } from '../schema/notifications';
 import { Map } from 'immutable';
 
 const initialState = Map({
-  notifications: [],
+  notifications: { },
   filter: NotificationTypeFilters.DEFAULT,
   loading: false,
 });
 
 function notificationReducer(state=initialState, action) {
   if (action.type === FETCH_NOTIFICATIONS_SUCCESS) {
-    const updatedNotifications = action.data.map((notification) => ({
+    console.log({ action })
+    const updatedNotifications = action.notifications.map((notification) => ({
       ...notification,
       isRead: false,
     }));
@@ -23,12 +24,13 @@ function notificationReducer(state=initialState, action) {
     });
   }
 
-  else if (action.type === MARK_AS_READ)
-    return state.setIn(
-      [ 'notifications', 'entities', 'notifications',
-	action.index.toString(), 'isRead', ],
+  else if (action.type === MARK_AS_READ) {
+    const updatedState = state.setIn(
+      [ 'notifications', 'entities', 'messages', action.guid, 'isRead' ],
       true
     );
+    return updatedState
+  }
 
   else if (action.type === SET_TYPE_FILTER)
     return state.set('filter', action.filter);

@@ -5,15 +5,17 @@ function filterTypeSelected(state) {
 }
 
 function getNotifications(state) {
-  return Map(state.getIn(['notifications', 'entities', 'notifications']));
+  const messages = state.getIn(['notifications', 'entities', 'messages']) || [ ]
+  return Object.values(messages)
 }
 
 function getUnreadNotifications(state) {
-  const notifications = getNotifications(state);
-  const unreadNotifications = notifications.filter(
-    notification => notification.isRead === false
+  const messages = getNotifications(state);
+  const unreadMessages = messages.filter(
+    message => message.isRead === false
   );
-  return unreadNotifications;
+  console.log({ unreadMessages })
+  return unreadMessages;
 }
 
 export { filterTypeSelected, getNotifications, getUnreadNotifications };

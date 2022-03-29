@@ -4,16 +4,16 @@ import {
 } from './notificationActionTypes';
 import fetch from "node-fetch";
 
-function markAsRead(index) {
-  return { type: MARK_AS_READ, index };
+function markAsRead(guid) {
+  return { type: MARK_AS_READ, guid };
 }
 
 function setNotificationFilter(filter) {
   return { type: SET_TYPE_FILTER, filter };
 }
 
-function fetchNotificationsSuccess(data) {
-  return { type: FETCH_NOTIFICATIONS_SUCCESS, data };
+function fetchNotificationsSuccess(notifications) {
+  return { type: FETCH_NOTIFICATIONS_SUCCESS, notifications };
 }
 
 function setLoadingState(loading) {

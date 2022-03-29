@@ -4,8 +4,9 @@ import { StyleSheet, css } from 'aphrodite';
 import NotificationItem from './NotificationItem';
 import { getLatestNotification } from '../utils/utils';
 import close_icon from '../assets/close-icon.png';
-import { getNotifications } from '../selectors/notificationSelector';
-import { fetchNotifications } from '../actions/notificationActionCreators';
+import { getUnreadNotifications } from '../selectors/notificationSelector';
+import { fetchNotifications, markAsRead } from '../actions/notificationActionCreators';
+import { connect } from 'react-redux';
 
 class Notifications extends React.PureComponent {
 
@@ -31,12 +32,12 @@ class Notifications extends React.PureComponent {
 		  <ul className={css(styles.ulSmallScreen)}>
 		    { this.props.listNotifications.map((notification) =>
 		      (<NotificationItem
-			 key={notification.id}
+			 key={notification.guid}
 			 type={notification.type}
 			 value={notification.value}
 			 html={notification.html}
 			 markNotificationAsRead={() => {
-			   this.props.markNotificationAsRead(notification.id)
+			   this.props.markNotificationAsRead(notification.guid)
 			 }}
 		       />)
 		    )}
@@ -114,6 +115,7 @@ Notifications.propTypes = {
   listNotifications: PropTypes.array,
   markNotificationAsRead: PropTypes.func,
   fetchNotifications: PropTypes.func,
+  markNotificationAsRead: PropTypes.func,
 };
 
 Notifications.defaultProps = {
@@ -123,20 +125,23 @@ Notifications.defaultProps = {
   listNotifications: [],
   markNotificationAsRead: () => {},
   fetchNotifications: () => {},
+  markNotificationAsRead: () => {},
 };
 
 function mapStateToProps(state) {
-  const messages =
-    getNotifications(state)
-    .map((notification) => notification.value)
-
-  return { listNotifications: messages }
+  return { listNotifications: getUnreadNotifications(state.notifications) }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchNotifications: () => dispatch(fetchNotifications()),
+    fetchNotifications: () => { dispatch(fetchNotifications()) },
+    markNotificationAsRead: (idx) => {
+      console.log("mark as read: ", idx)
+      dispatch(markAsRead(idx))
+    }
   }
 }
 
-export default Notifications;
+const ConnectedNotifications = connect(mapStateToProps, mapDispatchToProps)(Notifications);
+
+export { Notifications as default, ConnectedNotifications };

@@ -9,19 +9,19 @@ const testNotificationState = {
   loading: false,
   notifications: [
     {
-      id: 1,
+      guid: 1,
       isRead: false,
       type: "default",
       value: "New course available",
     },
     {
-      id: 2,
+      guid: 2,
       isRead: false,
       type: "urgent",
       value: "New resume available",
     },
     {
-      id: 3,
+      guid: 3,
       isRead: false,
       type: "urgent",
       value: "New data available",
@@ -112,7 +112,7 @@ describe('notificationReducer', () => {
 
   it('verifies markAsRead returns data with isRead as true', () => {
     const res = notificationReducer(Map(normalizedTestNotificationState), markAsRead(2));
-    expect(res.toJS().notifications.entities.notifications["2"].isRead).toEqual(true);
+    expect(res.toJS().notifications.entities.messages["2"].isRead).toEqual(true);
   });
 
   it('verifies setNotificationFilter returns state with correct filter', () => {

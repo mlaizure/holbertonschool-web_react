@@ -8,22 +8,28 @@ const testNotificationState = {
   filter: "DEFAULT",
   notifications: [
     {
-      id: 1,
-      isRead: false,
       type: "default",
-      value: "New course available",
+      context: {
+        guid: "1",
+        isRead: false,
+        value: "New course available"
+      }
     },
     {
-      id: 2,
-      isRead: true,
       type: "urgent",
-      value: "New resume available",
+      context: {
+        guid: "2",
+        isRead: true,
+        value: "New resume available",
+      }
     },
     {
-      id: 3,
-      isRead: false,
       type: "urgent",
-      value: "New data available",
+      context: {
+        guid: "3",
+        isRead: false,
+        value: "New data available",
+      }
     },
   ],
 };
@@ -38,15 +44,21 @@ const filteredNotificationState = {
   notifications: [
     {
       id: 1,
-      isRead: false,
       type: "default",
-      value: "New course available",
+      context: {
+        guid: "1",
+        isRead: false,
+        value: "New course available",
+      }
     },
     {
       id: 3,
-      isRead: false,
       type: "urgent",
-      value: "New data available",
+      context: {
+        guid: "3",
+        isRead: false,
+        value: "New data available",
+      }
     },
   ],
 };
@@ -64,15 +76,17 @@ describe('notifications selectors', () => {
 
   it('verifies list of message entities within reducer returned', () => {
     const res = getNotifications(Map(normalizedTestNotificationState));
-    expect(res.toJS()).toEqual(
-      normalizedTestNotificationState.notifications.entities.notifications
+    expect(res).toEqual(
+      Object.values(normalizedTestNotificationState.notifications.entities.messages)
     );
   });
 
   it('verifies list of unread message entities within reducer returned', () => {
+    console.log({ normalizedTestNotificationState: normalizedTestNotificationState.notifications.entities.messages })
     const res = getUnreadNotifications(Map(normalizedTestNotificationState));
-    expect(res.toJS()).toEqual(
-      normalizedFilteredNotificationState.notifications.entities.notifications
+    console.log(normalizedFilteredNotificationState)
+    expect(res).toEqual(
+      Object.values(normalizedFilteredNotificationState.notifications.entities.messages)
     );
   });
 });

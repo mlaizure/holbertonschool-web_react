@@ -11,16 +11,16 @@ import { StyleSheetTestUtils } from 'aphrodite';
 StyleSheetTestUtils.suppressStyleInjection();
 
 const listNotifications = [
-  {id: 1, type: 'default', value: 'New course available'},
-  {id: 2, type: 'urgent', value: 'New resume available'},
-  {id: 3, type: 'urgent', html: { __html: getLatestNotification() }},
+  {guid: 1, type: 'default', value: 'New course available'},
+  {guid: 2, type: 'urgent', value: 'New resume available'},
+  {guid: 3, type: 'urgent', html: { __html: getLatestNotification() }},
 ];
 
 const listNotificationsDiff = [
-  {id: 1, type: 'default', value: 'New course available'},
-  {id: 2, type: 'urgent', value: 'New resume available'},
-  {id: 3, type: 'urgent', html: { __html: getLatestNotification() }},
-  {id: 4, type: 'default', value: 'Hey there ho there'}
+  {guid: 1, type: 'default', value: 'New course available'},
+  {guid: 2, type: 'urgent', value: 'New resume available'},
+  {guid: 3, type: 'urgent', html: { __html: getLatestNotification() }},
+  {guid: 4, type: 'default', value: 'Hey there ho there'}
 ];
 
 describe('component rendering for Notifications', () => {
@@ -87,7 +87,7 @@ describe('component rendering for Notifications', () => {
     expect(wrapper.find(NotificationItem).get(0).props.type).toEqual('default');
   });
 
-  it('verifies that Notifications renders some specific text', () => {
+  fit('verifies that Notifications renders some specific text', () => {
     const wrapper = shallow(<Notifications displayDrawer={true} listNotifications={listNotifications} />);
     expect(wrapper.find('p').text()).toEqual('Here is the list of notifications');
   });

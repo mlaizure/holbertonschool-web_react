@@ -30,8 +30,8 @@ describe('component rendering for NotificationItem', () => {
 describe('clicking on notification', () => {
   it('verifies correct id is sent', () => {
     const listNotifications = [
-      {id: 1, type: 'default', value: 'New course available'},
-      {id: 2, type: 'urgent', value: 'New resume available'}
+      { guid: 1, type: 'default', value: 'New course available'},
+      { guid: 2, type: 'urgent', value: 'New resume available'}
     ];
 
     const mockMarkNotificationAsRead = jest.fn();

@@ -12,7 +12,7 @@ const mockStore = configureStore(middlewares);
 
 describe('notification actions', () => {
   it('verifies calling markAsRead with 1 has correct output', () => {
-    expect(markAsRead(1)).toEqual({ type: MARK_AS_READ, index: 1 });
+    expect(markAsRead(1)).toEqual({ type: MARK_AS_READ, guid: 1 });
   });
 
   it('verifies calling setNotificationFilter with default has correct output', () => {

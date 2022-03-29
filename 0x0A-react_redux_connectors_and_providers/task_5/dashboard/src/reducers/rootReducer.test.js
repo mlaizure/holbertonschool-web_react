@@ -8,7 +8,7 @@ describe('rootReducer', () => {
     expect(store.getState()).toEqual({
       courses: Map(),
       notifications: Map({
-	notifications: [],
+	notifications: { },
 	filter: 'DEFAULT',
 	loading: false,
       }),
