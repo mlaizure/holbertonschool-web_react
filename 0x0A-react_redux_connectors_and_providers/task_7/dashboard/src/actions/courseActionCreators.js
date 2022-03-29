@@ -1,4 +1,5 @@
 import { SELECT_COURSE, UNSELECT_COURSE, FETCH_COURSE_SUCCESS } from './courseActionTypes';
+import fetch from 'node-fetch';
 
 function dispatch(arg) {
   return arg;
@@ -14,4 +15,13 @@ export function unSelectCourse(index) {
 
 export function fetchCourseSuccess(data) {
   return dispatch({ type: FETCH_COURSE_SUCCESS, data });
+}
+
+export function fetchCourses() {
+    return function(dispatch) {
+    return fetch('/courses.json')
+      .then(response => response.json())
+      .then(data => dispatch(fetchCourseSuccess(data)))
+      .catch(err => console.log(err))
+  };
 }
