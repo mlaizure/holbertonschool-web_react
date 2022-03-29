@@ -87,7 +87,7 @@ describe('component rendering for Notifications', () => {
     expect(wrapper.find(NotificationItem).get(0).props.type).toEqual('default');
   });
 
-  fit('verifies that Notifications renders some specific text', () => {
+  it('verifies that Notifications renders some specific text', () => {
     const wrapper = shallow(<Notifications displayDrawer={true} listNotifications={listNotifications} />);
     expect(wrapper.find('p').text()).toEqual('Here is the list of notifications');
   });
