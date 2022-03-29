@@ -14,7 +14,6 @@ function getUnreadNotifications(state) {
   const unreadMessages = messages.filter(
     message => message.isRead === false
   );
-  console.log({ unreadMessages })
   return unreadMessages;
 }
 

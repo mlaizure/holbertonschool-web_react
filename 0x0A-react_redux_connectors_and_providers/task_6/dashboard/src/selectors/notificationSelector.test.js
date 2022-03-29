@@ -82,9 +82,7 @@ describe('notifications selectors', () => {
   });
 
   it('verifies list of unread message entities within reducer returned', () => {
-    console.log({ normalizedTestNotificationState: normalizedTestNotificationState.notifications.entities.messages })
     const res = getUnreadNotifications(Map(normalizedTestNotificationState));
-    console.log(normalizedFilteredNotificationState)
     expect(res).toEqual(
       Object.values(normalizedFilteredNotificationState.notifications.entities.messages)
     );

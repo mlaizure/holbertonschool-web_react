@@ -13,7 +13,6 @@ const initialState = Map({
 
 function notificationReducer(state=initialState, action) {
   if (action.type === FETCH_NOTIFICATIONS_SUCCESS) {
-    console.log({ action })
     const updatedNotifications = action.notifications.map((notification) => ({
       ...notification,
       isRead: false,
@@ -36,7 +35,6 @@ function notificationReducer(state=initialState, action) {
     return state.set('filter', action.filter);
 
   else if (action.type === SET_LOADING_STATE) {
-    console.log(action.loading);
     return state.set('loading', action.loading);
   }
 

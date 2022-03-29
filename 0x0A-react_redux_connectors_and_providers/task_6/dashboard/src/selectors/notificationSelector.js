@@ -11,11 +11,9 @@ function getNotifications(state) {
 
 function getUnreadNotifications(state) {
   const messages = getNotifications(state);
-  const unreadMessages = messages.filter(
+  return messages.filter(
     message => message.isRead === false
   );
-  console.log({ unreadMessages })
-  return unreadMessages;
 }
 
 export { filterTypeSelected, getNotifications, getUnreadNotifications };

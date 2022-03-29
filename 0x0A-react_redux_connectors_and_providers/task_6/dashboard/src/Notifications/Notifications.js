@@ -136,7 +136,6 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchNotifications: () => { dispatch(fetchNotifications()) },
     markNotificationAsRead: (idx) => {
-      console.log("mark as read: ", idx)
       dispatch(markAsRead(idx))
     }
   }
