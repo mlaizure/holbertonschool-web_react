@@ -24,11 +24,10 @@ function notificationReducer(state=initialState, action) {
   }
 
   else if (action.type === MARK_AS_READ) {
-    const updatedState = state.setIn(
+    return state.setIn(
       [ 'notifications', 'entities', 'messages', action.guid, 'isRead' ],
       true
     );
-    return updatedState
   }
 
   else if (action.type === SET_TYPE_FILTER)
