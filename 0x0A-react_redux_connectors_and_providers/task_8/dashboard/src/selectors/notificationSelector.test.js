@@ -1,4 +1,4 @@
-import { filterTypeSelected, getNotifications, getUnreadNotifications, } from './notificationSelector';
+import { filterTypeSelected, getNotifications, getUnreadNotificationsByType, } from './notificationSelector';
 import { initialState } from '../reducers/notificationReducer';
 import { NotificationTypeFilters } from '../actions/notificationActionTypes';
 import { notificationsNormalizer } from '../schema/notifications';
@@ -82,9 +82,18 @@ describe('notifications selectors', () => {
   });
 
   it('verifies list of unread message entities within reducer returned', () => {
-    const res = getUnreadNotifications(Map(normalizedTestNotificationState));
+    const res = getUnreadNotificationsByType(Map(normalizedTestNotificationState));
     expect(res).toEqual(
       Object.values(normalizedFilteredNotificationState.notifications.entities.messages)
     );
+  });
+
+  it('verifies selector returns unread urgent notifications when filter is set', () => {
+    const urgentFilter = {
+      ...normalizedTestNotificationState,
+      filter: 'URGENT',
+    };
+    const res = getUnreadNotificationsByType(Map(urgentFilter));
+    expect(res.every(({isRead, type}) => !isRead && type === 'urgent')).toEqual(true);
   });
 });

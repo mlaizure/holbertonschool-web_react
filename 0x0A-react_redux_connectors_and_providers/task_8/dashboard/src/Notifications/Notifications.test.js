@@ -120,3 +120,19 @@ describe('fetchNotifications', () => {
     expect(mockFetch).toHaveBeenCalled();
   });
 });
+
+describe('notification filtering', () => {
+  it('verifies clicking on urgent button calls setNotificationFilter with URGENT', () => {
+    const mockNotificationFilter = jest.fn();
+    const wrapper = shallow(<Notifications displayDrawer={true} listNotifications={listNotifications} setNotificationFilter={mockNotificationFilter} />);
+    wrapper.find('button[data-id="urgent-notif"]').simulate('click');
+    expect(mockNotificationFilter).toHaveBeenCalledWith('URGENT');
+  });
+
+  it('verifies clicking on default button calls setNotificationFilter with DEFAULT', () => {
+    const mockNotificationFilter = jest.fn();
+    const wrapper = shallow(<Notifications displayDrawer={true} listNotifications={listNotifications} setNotificationFilter={mockNotificationFilter} />);
+    wrapper.find('button[data-id="default-notif"]').simulate('click');
+    expect(mockNotificationFilter).toHaveBeenCalledWith('DEFAULT');
+  });
+});

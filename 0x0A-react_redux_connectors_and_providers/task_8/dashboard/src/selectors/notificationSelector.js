@@ -1,4 +1,6 @@
 import { Map } from 'immutable';
+import { createSelector } from 'reselect';
+import { NotificationTypeFilters } from '../actions/notificationActionTypes';
 
 function filterTypeSelected(state) {
   return state.get('filter');
@@ -9,11 +11,17 @@ function getNotifications(state) {
   return Object.values(messages)
 }
 
-function getUnreadNotifications(state) {
-  const messages = getNotifications(state);
-  return messages.filter(
-    message => message.isRead === false
-  );
-}
+const getUnreadNotificationsByType = createSelector(
+  filterTypeSelected,
+  getNotifications,
+  (filter, notifications) => notifications.filter(
+    (notification) => {
+      if (filter === NotificationTypeFilters.DEFAULT)
+	return !notification.isRead;
+      else if (filter === NotificationTypeFilters.URGENT)
+	return !notification.isRead && notification.type === 'urgent';
+    }
+  )
+);
 
-export { filterTypeSelected, getNotifications, getUnreadNotifications };
+export { filterTypeSelected, getNotifications, getUnreadNotificationsByType };
