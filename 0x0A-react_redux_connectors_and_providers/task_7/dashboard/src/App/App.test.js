@@ -7,7 +7,7 @@ import { ConnectedNotifications as Notifications } from '../Notifications/Notifi
 import Header, { ConnectedHeader } from '../Header/Header';
 import Login, { LoginWithLogging } from '../Login/Login';
 import Footer, { ConnectedFooter } from '../Footer/Footer';
-import CourseList from '../CourseList/CourseList';
+import { ConnectedCourseList as CourseList } from '../CourseList/CourseList';
 import { shallow } from 'enzyme';
 import { StyleSheetTestUtils } from 'aphrodite';
 import { mapStateToProps } from './App';

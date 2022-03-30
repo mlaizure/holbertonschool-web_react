@@ -82,4 +82,10 @@ describe('rendering CourseList component', () => {
       expect(node.equals(<CourseListRow textFirstCell="Unused" />));
     });
   });
+
+  it('verifies it fetches course when mounting', () => {
+    const mockFetch = jest.fn();
+    shallow(<CourseList fetchCourses={mockFetch} textFirstCell="Unused" />);
+    expect(mockFetch).toHaveBeenCalled();
+  });
 });

@@ -5,7 +5,7 @@ import { ConnectedNotifications as Notifications } from '../Notifications/Notifi
 import { ConnectedHeader as Header } from '../Header/Header';
 import { LoginWithLogging } from '../Login/Login';
 import { ConnectedFooter as Footer } from '../Footer/Footer';
-import CourseList from '../CourseList/CourseList';
+import { ConnectedCourseList as CourseList } from '../CourseList/CourseList';
 import BodySection from '../BodySection/BodySection';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import { getLatestNotification } from "../utils/utils";

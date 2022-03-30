@@ -11,7 +11,8 @@ function courseReducer(state = initialState, action) {
       isSelected: false,
     }));
     const normalizedCourses = coursesNormalizer(courses);
-    return state.merge(normalizedCourses);
+    const updatedState = state.merge(normalizedCourses);
+    return updatedState
   }
 
   else if (action.type === SELECT_COURSE)

@@ -19,9 +19,13 @@ export function fetchCourseSuccess(data) {
 
 export function fetchCourses() {
     return function(dispatch) {
-    return fetch('/courses.json')
-      .then(response => response.json())
-      .then(data => dispatch(fetchCourseSuccess(data)))
-      .catch(err => console.log(err))
+      console.log("Did dispatch?")
+      return fetch('/courses.json')
+        .then(response => response.json())
+        .then(data => {
+          console.log("Got data? ", data)
+          dispatch(fetchCourseSuccess(data))
+        })
+        .catch(err => console.log(err))
   };
 }

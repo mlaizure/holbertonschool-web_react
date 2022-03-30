@@ -20,15 +20,13 @@ const testCourses = [
   }
 ];
 
-const normalizedTestCoursesState = {
-  courses: coursesNormalizer(testCourses),
-};
+const normalizedTestCoursesState = coursesNormalizer(testCourses)
 
 describe('course selector', () => {
   it('verifies list of courses within reducer returned', () => {
     const res = getCourses(Map(normalizedTestCoursesState));
     expect(res).toEqual(
-      List(Object.values(normalizedTestCoursesState.courses.entities.courses))
+      List(Object.values(normalizedTestCoursesState.entities.courses))
     );
   });
 });
