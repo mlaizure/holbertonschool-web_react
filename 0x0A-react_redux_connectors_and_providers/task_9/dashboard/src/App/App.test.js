@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import App from './App';
-import { ConnectedNotifications as Notifications } from '../Notifications/Notifications';
+import { default as Notifications } from '../Notifications/NotificationsContainer';
 import Header, { ConnectedHeader } from '../Header/Header';
 import Login, { LoginWithLogging } from '../Login/Login';
 import Footer, { ConnectedFooter } from '../Footer/Footer';

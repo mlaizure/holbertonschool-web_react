@@ -2,52 +2,43 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, css } from 'aphrodite';
 import NotificationItem from './NotificationItem';
-import { getLatestNotification } from '../utils/utils';
 import close_icon from '../assets/close-icon.png';
-import { getUnreadNotificationsByType } from '../selectors/notificationSelector';
 import { fetchNotifications, markAsRead, setNotificationFilter } from '../actions/notificationActionCreators';
-import { connect } from 'react-redux';
 
-class Notifications extends React.PureComponent {
-
-  componentDidMount () {
-    this.props.fetchNotifications();
-  }
-
-  render() {
+function Notifications (props) {
     return (
       <>
-	{ this.props.displayDrawer
+	{ props.displayDrawer
 	  ? <div className={css(styles.notificationStyle)} style = {{ position: 'relative'}} data-id="app-notifications">
 	      <button style={{ position: 'absolute', top: '3px', right: '3px', border:'none', background: 'none', cursor: 'pointer'}}
 		      aria-label="Close"
 		      data-id="close-notifications"
-		      onClick={() => this.props.handleHideDrawer()}>
+		      onClick={() => props.handleHideDrawer()}>
 		<img src={close_icon} alt="close icon" width="10px" height="10px" />
 	      </button>
-	      { this.props.listNotifications.length > 0
+	      { props.listNotifications.length > 0
 		?
 		<>
 		  <p id="notifIntro">Here is the list of notifications</p>
 		  <button
-		    onClick={() => this.props.setNotificationFilter('URGENT')}
+		    onClick={() => props.setNotificationFilter('URGENT')}
 		  data-id='urgent-notif'>
 		    !!
 		  </button>
 		  <button
-		    onClick={() => this.props.setNotificationFilter('DEFAULT')}
+		    onClick={() => props.setNotificationFilter('DEFAULT')}
 		  data-id='default-notif'>
 		    💠
 		  </button>
 		  <ul className={css(styles.ulSmallScreen)}>
-		    { this.props.listNotifications.map((notification) =>
+		    { props.listNotifications.map((notification) =>
 		      (<NotificationItem
 			 key={notification.guid}
 			 type={notification.type}
 			 value={notification.value}
 			 html={notification.html}
 			 markNotificationAsRead={() => {
-			   this.props.markNotificationAsRead(notification.guid)
+			   props.markNotificationAsRead(notification.guid)
 			 }}
 		       />)
 		    )}
@@ -59,14 +50,13 @@ class Notifications extends React.PureComponent {
 	  : <
 	      div className={css(styles.menuItemStyle)}
 	      data-id="menu-item"
-	      onClick={() => this.props.handleDisplayDrawer()}
+	      onClick={() => props.handleDisplayDrawer()}
 	    >
 	    Your notifications</div>
 	}
       </>
     );
   };
-}
 
 const opacityKeyframes = {
   'from': { opacity: 0.5, },
@@ -140,24 +130,4 @@ Notifications.defaultProps = {
   setNotificationFilter: () => {},
 };
 
-function mapStateToProps(state) {
-  return {
-    listNotifications: getUnreadNotificationsByType(state.notifications)
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    fetchNotifications: () => { dispatch(fetchNotifications()) },
-    markNotificationAsRead: (idx) => {
-      dispatch(markAsRead(idx))
-    },
-    setNotificationFilter: (filter) => {
-      dispatch(setNotificationFilter(filter))
-    },
-  }
-}
-
-const ConnectedNotifications = connect(mapStateToProps, mapDispatchToProps)(Notifications);
-
-export { Notifications as default, ConnectedNotifications };
+export default Notifications

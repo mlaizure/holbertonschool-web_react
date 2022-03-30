@@ -97,27 +97,15 @@ describe('verifies handle and hide DisplayDrawer called correctly', () => {
   it('verifies clicking on menu item calls handleDisplayDrawer', () => {
     const mockHandle = jest.fn();
     const wrapper = shallow(<Notifications listNotifications={listNotifications} handleDisplayDrawer={mockHandle} />);
-    const handleSpy = jest.spyOn(wrapper.instance().props, 'handleDisplayDrawer');
     wrapper.find('div[data-id="menu-item"]').simulate('click');
-    expect(handleSpy).toBeCalled();
-    handleSpy.mockRestore();
+    expect(mockHandle).toBeCalled();
   });
 
   it('verifies clicking on close button calls hideDisplayDrawer', () => {
     const mockHide = jest.fn();
     const wrapper = shallow(<Notifications displayDrawer={true} listNotifications={listNotifications} handleHideDrawer={mockHide} />);
-    const hideSpy = jest.spyOn(wrapper.instance().props, 'handleHideDrawer');
     wrapper.find('button[data-id="close-notifications"]').simulate('click');
-    expect(hideSpy).toBeCalled();
-    hideSpy.mockRestore();
-  });
-});
-
-describe('fetchNotifications', () => {
-  it('verifies fetchNotifications is called when component mounted', () => {
-    const mockFetch = jest.fn();
-    const wrapper = mount(<Notifications displayDrawer={true} fetchNotifications = {mockFetch} />);
-    expect(mockFetch).toHaveBeenCalled();
+    expect(mockHide).toBeCalled();
   });
 });
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, css } from 'aphrodite';
-import { ConnectedNotifications as Notifications } from '../Notifications/Notifications';
+import { default as Notifications } from '../Notifications/NotificationsContainer';
 import { ConnectedHeader as Header } from '../Header/Header';
 import { LoginWithLogging } from '../Login/Login';
 import { ConnectedFooter as Footer } from '../Footer/Footer';
